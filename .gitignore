@@ -1,0 +1,5 @@
+# Lighthouse files
+.lighthouseci
+
+# Local env files
+.env
