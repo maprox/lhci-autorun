@@ -1,5 +1,8 @@
-# Lighthouse files
-.lighthouseci
+# vscode
+.history
 
-# Local env files
+# local env files
 .env
+
+# kubernetes secrets
+**/secrets.yaml
