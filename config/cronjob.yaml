@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  namespace: lighthouse-ci
+  name: lhci-cronjob
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: lhci-autorun
+            image: maprox/lhci-autorun:latest
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: GIT_USER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: lhci
+                  key: GIT_USER_NAME
+            - name: GIT_USER_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: lhci
+                  key: GIT_USER_EMAIL
+            - name: LHCI_COLLECT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: lhci
+                  key: LHCI_COLLECT_URL
+            - name: LHCI_UPLOAD_SERVER_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: lhci
+                  key: LHCI_UPLOAD_SERVER_BASE_URL
+            - name: LHCI_UPLOAD_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: lhci
+                  key: LHCI_UPLOAD_TOKEN
+            - name: LHCI_UPLOAD_BASIC_AUTH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: lhci
+                  key: LHCI_UPLOAD_BASIC_AUTH_USERNAME
+            - name: LHCI_UPLOAD_BASIC_AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: lhci
+                  key: LHCI_UPLOAD_BASIC_AUTH_PASSWORD
+          restartPolicy: OnFailure
