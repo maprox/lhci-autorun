@@ -12,6 +12,9 @@ spec:
           containers:
           - name: lhci-autorun
             image: maprox/lhci-autorun:latest
+            volumeMounts:
+             - mountPath: /dev/shm
+               name: dshm
             imagePullPolicy: IfNotPresent
             env:
             - name: GIT_USER_NAME
@@ -49,4 +52,9 @@ spec:
                 secretKeyRef:
                   name: lhci
                   key: LHCI_UPLOAD_BASIC_AUTH_PASSWORD
+          volumes:
+          - name: dshm
+            emptyDir:
+              medium: Memory
+              sizeLimit: 1Gi
           restartPolicy: OnFailure
